@@ -1,6 +1,6 @@
 # ACore docker-compose
 
-The docker-compose file included in this folder provides you the azerothcore ready-to-use images.
+The docker-compose file included in this folder provides an easy way to use the azerothcore images available on [docker hub](https://hub.docker.com/u/acore) .
 It means that you will be able to run a clean azerothcore server without installing anything but docker.
 
 NOTE: You can re-use this docker-compose configuration inside another project to test AzerothCore together
