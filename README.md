@@ -10,6 +10,12 @@ The original repository with the sources and the workflows to images used by thi
 
 ## Getting started
 
+The magic one-line command to have everything up and running: 
+
+`docker-compose pull && docker-compose up ac-db-import && docker-compose up`
+
+## Step by step installation
+
 ### Pull the latest images
 
 ```Bash
@@ -21,7 +27,7 @@ This command will pull latest images from the docker hub
 ### Setup the database
 
 ```Bash
-docker-compose up ac-migrate
+docker-compose up ac-db-import
 ```
 
 It runs the db-assembler tool to import all needed sql inside the mysql container

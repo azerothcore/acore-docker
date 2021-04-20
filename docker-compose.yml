@@ -56,11 +56,11 @@ services:
     ports:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
 
-  ac-migration:
+  ac-db-import:
     <<: *ac-shared-conf
     image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     command: ./acore.sh db-assembler import-all
-    profiles: [migrate]
+    profiles: [db-import]
 
   ac-dev-server:
     <<: *ac-shared-conf
@@ -70,7 +70,7 @@ services:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
-    profiles: [migrate]
+    profiles: [dev]
     volumes:
       - ac-dev-server:/azerothcore
 
