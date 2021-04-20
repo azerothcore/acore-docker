@@ -4,7 +4,9 @@ The docker-compose file included in this folder provides you the azerothcore rea
 It means that you will be able to run a clean azerothcore server without installing anything but docker.
 
 NOTE: You can re-use this docker-compose configuration inside another project to test AzerothCore together
-with another application, for instance an API or a website based on docker-compose. 
+with another application, for instance an API or a website based on docker-compose.
+
+The original repository with the sources and the workflows to images used by this docker-compose is available here: https://github.com/azerothcore/azerothcore-wotlk
 
 ## Getting started
 
