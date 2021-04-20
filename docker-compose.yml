@@ -64,8 +64,8 @@ services:
 
   ac-dev-server:
     <<: *ac-shared-conf
+    tty: true
     image: acore/ac-dev-server:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
-    command: ./acore.sh db-assembler import-all
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
