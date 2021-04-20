@@ -1,0 +1,82 @@
+version: '3.9'
+
+# extension field: https://docs.docker.com/compose/compose-file/compose-file-v3/#extension-fields
+x-networks: &networks
+  networks:
+    - ac-network
+
+x-ac-shared-conf: &ac-shared-conf
+  <<: *networks
+  working_dir: /azerothcore
+  environment:
+    DB_AUTH_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
+    DB_CHARACTERS_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
+    DB_WORLD_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
+  depends_on:
+    ac-database:
+      condition: service_healthy
+
+services:
+  ac-database:
+    <<: *networks
+    image: mysql:8.0
+    restart: unless-stopped
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    ports:
+      - ${DOCKER_DB_EXTERNAL_PORT:-3306}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DOCKER_DB_ROOT_PASSWORD:-password}
+    volumes:
+      - type: volume
+        source: ac-database
+        target: /var/lib/mysql
+    healthcheck:
+        test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
+        interval: 2s
+        timeout: 20s
+        retries: 10
+
+  ac-worldserver:
+    <<: *ac-shared-conf
+    stdin_open: true
+    tty: true
+    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
+      - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
+
+  ac-authserver:
+    <<: *ac-shared-conf
+    tty: true
+    image: acore/authserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
+
+  ac-migration:
+    <<: *ac-shared-conf
+    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    command: ./acore.sh db-assembler import-all
+    profiles: [migrate]
+
+  ac-dev-server:
+    <<: *ac-shared-conf
+    image: acore/ac-dev-server:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    command: ./acore.sh db-assembler import-all
+    ports:
+      - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
+      - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
+      - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
+    profiles: [migrate]
+    volumes:
+      - ac-dev-server:/azerothcore
+
+volumes:
+  ac-database:
+  ac-dev-server:
+
+networks:
+  ac-network:

@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+
+  ac-worldserver:
+    working_dir: /azerothcore
+    environment:
+      DBLIST: WORLD2
+      DB_WORLD_NAME: acore_world2
+      DB_WORLD2_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
+    depends_on:
+      ac-database:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - ${DOCKER_WORLD_EXTERNAL_PORT:-8086}:8085
+      - ${DOCKER_SOAP_EXTERNAL_PORT:-7879}:7878
+    networks:
+      - ac-network
+
+  ac-migration-2:
+    <<: *ac-shared-conf
+    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    command: ./acore.sh db-assembler import-all
+    profiles: [migrate]
+
+networks:
+  ac-network:
