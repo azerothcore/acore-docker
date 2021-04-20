@@ -73,7 +73,7 @@ You just need to combine the following 2 commands:
 
 ```Bash
 docker-compose pull
-docker-compose up ac-migrate
+docker-compose up ac-db-import
 ```
 
 ## Dev server (Experimental)
