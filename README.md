@@ -34,13 +34,15 @@ docker-compose up
 
 To startup your authserver and worlserver
 
-If you need to run them in background instead you can use the following command:
+**CONGRATULATIONS! now you have an up and running AzerothCore. You can already login with a compatible client**
+
+NOTE: If you need to run them in background instead you can use the following command:
 
 ```Bash
 docker-compose up -d
 ```
 
-### Access the worlserver console
+### Access the worlserver console and create an account
 
 Run the following command to get the ID of the worlserver container:
 
@@ -49,13 +51,13 @@ docker-compose ps
 ```
 
 You will see a list of docker services. The worlserver service will have a name that ends with `_ac-worldserver_1`
-Use that name for together with the following command:
+Use that name together with the following command:
 
 ```Bash
 docker attach <your-service-name>
 ```
 
-Now you can use the worlserver console to run azerothcore commands, including the "account create".
+Now you can use the worlserver console to run azerothcore commands, including the "account create <user> <password>".
 
 NOTE: you can detach from a container and leave it running using the CTRL-p CTRL-q key sequence.
 
