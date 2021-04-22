@@ -77,6 +77,15 @@ Now you can use the worlserver console to run azerothcore commands, including th
 
 NOTE: you can detach from a container and leave it running using the CTRL-p CTRL-q key sequence.
 
+### Stop or restart the services
+
+There are several commands to stop or restart the services, depending on your needs:
+
+* `docker-compose stop` : just stops the current running services
+* `docker-compose restart` : restarts the current running services
+* `docker-compose down` : stops and removes the containers.
+* `docker-compose down --rmi all -v` : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
+
 ### Update your services with latest images
 
 You just need to combine the following 2 commands:
