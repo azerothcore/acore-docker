@@ -10,9 +10,16 @@ The original repository with the sources and the workflows to images used by thi
 
 ## Getting started
 
-The magic one-line command to have everything up and running: 
+The magic command sequence to have everything up and running (with an interactive worldserver terminal): 
 
-`docker-compose pull && docker-compose up ac-db-import && docker-compose up`
+```
+docker-compose pull 
+docker-compose up ac-db-import
+docker-compose up -d ac-authserver
+docker-compose run --rm ac-worldserver
+```
+
+NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment
 
 ## Step by step installation
 
@@ -49,6 +56,9 @@ docker-compose up -d
 ```
 
 ### Access the worlserver console and create an account
+
+With `docker-compose up` we have an up and running worldserver as well, but you need to access its interactive shell to
+run commands on the worldserver.
 
 Run the following command to get the ID of the worlserver container:
 
