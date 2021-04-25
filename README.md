@@ -16,7 +16,7 @@ The magic command sequence to have everything up and running (with an interactiv
 docker-compose pull 
 docker-compose up ac-db-import
 docker-compose up -d ac-authserver
-docker-compose run --rm ac-worldserver
+docker-compose run --rm --service-ports ac-worldserver
 ```
 
 NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment
