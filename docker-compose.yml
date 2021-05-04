@@ -99,6 +99,7 @@ services:
     profiles: [dev]
 
   phpmyadmin:
+    <<: *networks
     image: phpmyadmin
     ports:
       - 8080:80
