@@ -10,7 +10,9 @@ The original repository with the sources and the workflows to images used by thi
 
 ## Getting started
 
-The magic command sequence to have everything up and running (with an interactive worldserver terminal): 
+First of all, download or clone [this repository](https://github.com/azerothcore/acore-docker)
+
+Run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
 
 ```
 docker-compose pull 
