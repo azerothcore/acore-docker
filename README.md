@@ -16,7 +16,7 @@ The magic command sequence to have everything up and running (with an interactiv
 docker-compose pull 
 docker-compose up ac-db-import
 docker-compose up -d ac-authserver
-docker-compose run --rm ac-worldserver
+docker-compose run --rm --service-ports ac-worldserver
 ```
 
 NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment
@@ -76,6 +76,15 @@ docker attach <your-service-name>
 Now you can use the worlserver console to run azerothcore commands, including the "account create <user> <password>".
 
 NOTE: you can detach from a container and leave it running using the CTRL-p CTRL-q key sequence.
+
+### Stop or restart the services
+
+There are several commands to stop or restart the services, depending on your needs:
+
+* `docker-compose stop` : just stops the current running services
+* `docker-compose restart` : restarts the current running services
+* `docker-compose down` : stops and removes the containers.
+* `docker-compose down --rmi all -v` : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
 
 ### Update your services with latest images
 
