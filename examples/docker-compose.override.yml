@@ -7,7 +7,7 @@ x-networks: &networks
 x-ac-shared-conf: &ac-shared-conf
   <<: *networks
   working_dir: /azerothcore
-  image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+  image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
   environment:
     DBLIST: WORLD2
     DB_WORLD_NAME: acore_world2
@@ -28,6 +28,8 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7879}:7878
     networks:
       - ac-network
+    volumes_from:
+      - ac-client-data:ro
 
   ac-db-import-2:
     <<: *ac-shared-conf

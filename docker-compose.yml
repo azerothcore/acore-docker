@@ -24,7 +24,7 @@ services:
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
     ports:
-      - ${DOCKER_DB_EXTERNAL_PORT:-3306}:3306
+      - ${DOCKER_DB_EXTERNAL_PORT:-63306}:3306
     environment:
       - MYSQL_ROOT_PASSWORD=${DOCKER_DB_ROOT_PASSWORD:-password}
     volumes:
@@ -41,31 +41,39 @@ services:
     <<: *ac-shared-conf
     stdin_open: true
     tty: true
-    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     restart: unless-stopped
     privileged: true
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
+    volumes_from:
+      - ac-client-data:ro
 
   ac-authserver:
     <<: *ac-shared-conf
     tty: true
-    image: acore/authserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-authserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     restart: unless-stopped
     ports:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
 
   ac-db-import:
     <<: *ac-shared-conf
-    image: acore/worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     command: ./acore.sh db-assembler import-all
     profiles: [db-import]
+
+  ac-client-data:
+    <<: *networks
+    image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-master}
+    volumes:
+      - /azerothcore/env/dist/data
 
   ac-dev-server:
     <<: *ac-shared-conf
     tty: true
-    image: acore/ac-dev-server:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
