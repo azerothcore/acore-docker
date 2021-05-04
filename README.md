@@ -2,7 +2,7 @@
 
 <img src="https://www.azerothcore.org/images/logo.png" alt="logo" width="200"/>
 
-{:toc}
+* {:toc}
 
 The docker-compose file included in this folder provides an easy way to use the azerothcore images available on [docker hub](https://hub.docker.com/u/acore) .
 It means that you will be able to run a clean azerothcore server without installing anything but docker.
@@ -12,11 +12,19 @@ with another application, for instance an API or a website based on docker-compo
 
 The original repository with the sources and the workflows to images used by this docker-compose is available here: https://github.com/azerothcore/azerothcore-wotlk
 
+## Requirements
+
+* [Docker](https://docs.docker.com/get-docker/)
+* [Git](https://git-scm.com/downloads) to clone our repo (suggested), otherwise you can manually [download it](https://github.com/azerothcore/acore-docker/archive/refs/heads/master.zip)
+
 ## Getting started
 
-First of all, download or clone [this repository](https://github.com/azerothcore/acore-docker)
+First of all, download or clone [this repository](https://github.com/azerothcore/acore-docker).
+If you want to clone the repo you have to open a terminal and run this command: `git clone https://github.com/azerothcore/acore-docker`
 
-Run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
+To open a terminal inside a specific folder in your operating system check [this interesting article](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/)
+
+Now run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
 
 ```
 docker-compose pull 
@@ -25,7 +33,7 @@ docker-compose up -d ac-authserver
 docker-compose run --rm --service-ports ac-worldserver
 ```
 
-NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment
+**NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment**
 
 ## Step by step installation
 
