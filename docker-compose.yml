@@ -44,9 +44,12 @@ services:
     image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
     restart: unless-stopped
     privileged: true
+    user: ${DOCKER_USER:-acore}
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
+    volumes:
+      - ./scripts:/azerothcore/env/dist/bin/lua_scripts/scripts
     volumes_from:
       - ac-client-data:ro
 
@@ -81,6 +84,27 @@ services:
     profiles: [dev]
     volumes:
       - ac-dev-server:/azerothcore
+
+  ac-dev-tools:
+    <<: *ac-shared-conf
+    image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    user: ${DOCKER_USER:-acore}
+    working_dir: /azerothcore/env/client/
+    volumes:
+      - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
+      - ${DOCKER_VOL_TOOLS_DBC:-./var/extractors/dbc}:/azerothcore/env/client/dbc
+      - ${DOCKER_VOL_TOOLS_MAPS:-./var/extractors/maps}:/azerothcore/env/client/maps
+      - ${DOCKER_VOL_TOOLS_VMAPS:-./var/extractors/vmaps}:/azerothcore/env/client/vmaps
+      - ${DOCKER_VOL_TOOLS_MMAPS:-./var/extractors/mmaps}:/azerothcore/env/client/mmaps
+    profiles: [dev]
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    profiles: [dev]
 
 volumes:
   ac-database:

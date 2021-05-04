@@ -77,6 +77,8 @@ Now you can use the worlserver console to run azerothcore commands, including th
 
 NOTE: you can detach from a container and leave it running using the CTRL-p CTRL-q key sequence.
 
+The list of GM commands is available [here](https://www.azerothcore.org/wiki/GM-Commands)
+
 ### Stop or restart the services
 
 There are several commands to stop or restart the services, depending on your needs:
@@ -107,13 +109,48 @@ This image is intended to be used together with the [VSCode Docker extension](ht
 NOTE: This container uses the same mysql instance of the ac-authserver/worldserver, so it's not suggested to use all the services to avoid
 issues with the database consistence. However, you can always extends the docker-compose to add a second database instance (read the paragraph below)
 
-NOTE 2: This is an experimental system. For complete support we still suggest to use the docker layer of the azerothcore-wotlk repository.
+NOTE 2: This is an experimental system. For complete support we still suggest to use the docker layer of the [azerothcore-wotlk]((https://github.com/azerothcore/azerothcore-wotlk)) repository.
 
+## Customize your server
 
-## Extends the default docker-compose
+*NOTE: to unlock 100% power of AzerothCore, please use the [main repo](https://github.com/azerothcore/azerothcore-wotlk) and [compile it by your self](https://www.azerothcore.org/wiki/Installation)!*
+
+Despite using the [GM commands](https://www.azerothcore.org/wiki/GM-Commands) to operate within the CLI or in game, you have the flexibility to extend
+your server with the following techniques:
+
+### Extends the default docker-compose
 
 With the combination of the [docker-compose.override](https://docs.docker.com/compose/extends/) and the environment variables available to configure
 the AzerothCore project, you can extend this docker by adding external and shared volumes, change configurations and even add multiple realms.
 
-Check the examples folder that contains an override file ready to be used to implement a secondary worldserver
+### How to create a second multirealm environment
+
+Check the /examples folder that contains an override file ready to be used to implement a secondary worldserver
+
+### Customize your server with the database
+
+The database service available within the docker-compose expose a mysql port that can be accessed by any mysql client
+However, our docker-compose also provides a pre-configured phpmyadmin container that can be used to access the database.
+
+What you need to do is the following:
+
+1. `docker-compose up phpmyadmin` to startup the phpmyadmin container
+2. connect to `https://127.0.0.1:8080` (unless you changed the port)
+3. insert the db credentials. By default:  ac-database (host), root (user), password (password)
+
+You are ready to go! 
+
+Check the [AzerothCore wiki](https://www.azerothcore.org/wiki/documentation_index) to learn how to work with the AC database
+### Customize your server with lua scripts
+
+The worldserver container included in our docker-compose integrates the Eluna module
+
+You just need to install your lua scripts inside the /scripts folder and you are ready to go!
+
+Check the [Eluna documentation](https://github.com/ElunaLuaEngine/Eluna/blob/master/README.md) to learn how to work with this system
+
+### Extract client data by your self with the ac-dev-tools container
+
+Work in progress...
+
 
