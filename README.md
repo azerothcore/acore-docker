@@ -11,7 +11,9 @@ It means that you will be able to run a clean azerothcore server without install
 NOTE: You can re-use this docker-compose configuration inside another project to test AzerothCore together
 with another application, for instance an API or a website based on docker-compose.
 
-The original repository with the sources and the workflows to generate the images used by this docker-compose is available here: https://github.com/azerothcore/azerothcore-wotlk
+The original repository with the sources and the workflows to generate the images used by this docker-compose is available [here](https://github.com/azerothcore/azerothcore-wotlk)
+
+Do you have any questions? Open an [issue here](https://github.com/azerothcore/acore-docker/issues)
 
 ## Requirements
 
