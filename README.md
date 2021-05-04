@@ -2,7 +2,8 @@
 
 <img src="https://www.azerothcore.org/images/logo.png" alt="logo" width="200"/>
 
-* {:toc}
+* Table of Contents
+{:toc}
 
 The docker-compose file included in this folder provides an easy way to use the azerothcore images available on [docker hub](https://hub.docker.com/u/acore) .
 It means that you will be able to run a clean azerothcore server without installing anything but docker.
