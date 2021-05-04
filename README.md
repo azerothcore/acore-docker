@@ -1,5 +1,7 @@
 # ACore docker-compose
 
+<img src="https://www.azerothcore.org/images/logo.png" alt="logo" width="200"/>
+
 {:toc}
 
 The docker-compose file included in this folder provides an easy way to use the azerothcore images available on [docker hub](https://hub.docker.com/u/acore) .
