@@ -63,7 +63,7 @@ services:
 
   ac-eluna-ts-dev:
     image: acore/eluna-ts:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
-    command: sh -c "cd /eluna-ts/src && npm install && cd /eluna-ts && npm run dev"
+    command: sh -c "cd /eluna-ts/src && npm install && cd /eluna-ts && npm run build:lib && npm run dev"
     volumes:
       # from typescript
       - ./scripts/typescript:/eluna-ts/src/
