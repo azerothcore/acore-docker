@@ -144,7 +144,7 @@ the AzerothCore project, you can extend this docker by adding external and share
 
 ### How to create a second multirealm environment
 
-Check the /examples folder that contains an override file ready to be used to implement a secondary worldserver
+Check the /conf/dist folder that contains an override file ready to be used to implement a secondary worldserver
 
 ### Customize your server with the database
 

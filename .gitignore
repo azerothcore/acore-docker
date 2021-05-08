@@ -1,3 +1,9 @@
 /docker-compose.override.yml
 /scripts/*
-!/scripts/.gitkeep
+!/scripts/*/
+/scripts/*/*
+!/scripts/*/.gitkeep
+!/scripts/typescript/tsconfig.json
+!/scripts/typescript/package.json
+/var
+npm_modules

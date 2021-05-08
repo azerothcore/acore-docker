@@ -1,0 +1,9 @@
+{
+  "name": "acore-docker-ts",
+  "version": "1.0.0",
+  "description": "TS scripts for acore-docker",
+  "dependencies": {
+    "@azerothcore/eluna-ts-definitions": "^1.2.8",
+    "@azerothcore/eluna-ts-lib": "^1.0.10"
+  }
+}
