@@ -85,7 +85,7 @@ Run the following command to get the ID of the worlserver container:
 docker-compose ps
 ```
 
-You will see a list of docker services. The worlserver service will have a name that ends with `_ac-worldserver_1`
+You will see a list of docker services. The worlserver service will have a name that ends with **_ac-worldserver_1**
 Use that name together with the following command:
 
 ```Bash
@@ -140,7 +140,7 @@ your server with the following techniques:
 
 ### Change your docker configurations with the environment variables
 
-Within the **/conf/dist``` folder you can find a sample of the ```.env** file which you can copy inside the root folder of this project to 
+Within the **/conf/dist** folder you can find a sample of the **.env** file which you can copy inside the root folder of this project to 
 change certain **docker-compose** configurations, such as changing the ports of your docker services or the volumes path etc.
 
 Check the comments inside that file to understand how to use those variables.
@@ -181,13 +181,13 @@ This project also integrates the [Eluna-TS](https://github.com/azerothcore/eluna
 
 What you need is just create an "index.ts" within the **/scripts/typescript** folder and you can directly start by writing your scripts there or creating other files to import.
 
-Inside our **docker-compose.yml``` there's the ```ac-eluna-ts-dev``` service which check changes on ```/scripts/typescript** folder to automatically recompile your TS files into Lua.
+Inside our **docker-compose.yml** there's the **ac-eluna-ts-dev** service which check changes on **/scripts/typescript** folder to automatically recompile your TS files into Lua.
 
 **Disclaimer:** Eluna-TS is based on [TypeScriptToLua](https://typescripttolua.github.io/) which is a Typescript limited environment. You cannot use all the Typescript features, check their page for more info.
 
 ### Extract client data by your self with the ac-dev-tools container
 
-Within your **.env``` file set this variable: ```DOCKER_CLIENT_DATA_FOLDER=** with the **absolute path** of the "Data" folder of your game client.
+Within your **.env** file set this variable: **DOCKER_CLIENT_DATA_FOLDER=** with the **absolute path** of the "Data" folder of your game client.
 
 Now run this command: **docker-compose run --rm ac-dev-tools bash** to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
 
