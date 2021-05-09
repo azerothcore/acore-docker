@@ -23,7 +23,7 @@ Do you have any questions? Open an [issue here](https://github.com/azerothcore/a
 ## Getting started
 
 First of all, download or clone [this repository](https://github.com/azerothcore/acore-docker).
-If you want to clone the repo you have to open a terminal and run this command: `git clone https://github.com/azerothcore/acore-docker`
+If you want to clone the repo you have to open a terminal and run this command: ```git clone https://github.com/azerothcore/acore-docker```
 
 To open a terminal inside a specific folder in your operating system check [this interesting article](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/)
 
@@ -76,7 +76,7 @@ docker-compose up -d
 
 ### Access the worlserver console and create an account
 
-With `docker-compose up` we have an up and running worldserver as well, but you need to access its interactive shell to
+With ```docker-compose up``` we have an up and running worldserver as well, but you need to access its interactive shell to
 run commands on the worldserver.
 
 Run the following command to get the ID of the worlserver container:
@@ -102,10 +102,10 @@ The list of GM commands is available [here](https://www.azerothcore.org/wiki/GM-
 
 There are several commands to stop or restart the services, depending on your needs:
 
-* `docker-compose stop` : just stops the current running services
-* `docker-compose restart` : restarts the current running services
-* `docker-compose down` : stops and removes the containers.
-* `docker-compose down --rmi all -v` : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
+* ```docker-compose stop``` : just stops the current running services
+* ```docker-compose restart``` : restarts the current running services
+* ```docker-compose down``` : stops and removes the containers.
+* ```docker-compose down --rmi all -v``` : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
 
 ### Update your services with latest images
 
@@ -140,8 +140,8 @@ your server with the following techniques:
 
 ### Change your docker configurations with the environment variables
 
-Within the `/conf/dist` folder you can find a sample of the `.env` file which you can copy inside the root folder of this project to 
-change certain `docker-compose` configurations, such as changing the ports of your docker services or the volumes path etc.
+Within the ```/conf/dist``` folder you can find a sample of the ```.env``` file which you can copy inside the root folder of this project to 
+change certain ```docker-compose``` configurations, such as changing the ports of your docker services or the volumes path etc.
 
 Check the comments inside that file to understand how to use those variables.
 ### Extends the default docker-compose
@@ -160,8 +160,8 @@ However, our docker-compose also provides a pre-configured phpmyadmin container 
 
 What you need to do is the following:
 
-1. `docker-compose up phpmyadmin` to startup the phpmyadmin container
-2. connect to `https://127.0.0.1:8080` (unless you changed the port)
+1. ```docker-compose up phpmyadmin``` to startup the phpmyadmin container
+2. connect to ```https://127.0.0.1:8080``` (unless you changed the port)
 3. insert the db credentials. By default:  ac-database (host), root (user), password (password)
 
 You are ready to go! 
@@ -179,24 +179,24 @@ Check the [Eluna documentation](https://github.com/ElunaLuaEngine/Eluna/blob/mas
 
 This project also integrates the [Eluna-TS](https://github.com/azerothcore/eluna-ts) system which allows you to create your custom scripts in Typescript! 
 
-What you need is just create an "index.ts" within the `/scripts/typescript` folder and you can directly start by writing your scripts there or creating other files to import.
+What you need is just create an "index.ts" within the ```/scripts/typescript``` folder and you can directly start by writing your scripts there or creating other files to import.
 
-Inside our `docker-compose.yml` there's the `ac-eluna-ts-dev` service which check changes on `/scripts/typescript` folder to automatically recompile your TS files into Lua.
+Inside our ```docker-compose.yml``` there's the ```ac-eluna-ts-dev``` service which check changes on ```/scripts/typescript``` folder to automatically recompile your TS files into Lua.
 
 **Disclaimer:** Eluna-TS is based on [TypeScriptToLua](https://typescripttolua.github.io/) which is a Typescript limited environment. You cannot use all the Typescript features, check their page for more info.
 
 ### Extract client data by your self with the ac-dev-tools container
 
-Within your `.env` file set this variable: `DOCKER_CLIENT_DATA_FOLDER=` with the **absolute path** of the "Data" folder of your game client.
+Within your ```.env``` file set this variable: ```DOCKER_CLIENT_DATA_FOLDER=``` with the **absolute path** of the "Data" folder of your game client.
 
-Now run this command: `docker-compose run --rm ac-dev-tools bash` to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
+Now run this command: ```docker-compose run --rm ac-dev-tools bash``` to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
 
-* `./maps` -> to extract dbc and maps
-* `./vmap4extractor && ./vmap4assembler` -> to extract and assemble the vertical maps
-* `./mmaps_generator` -> to extract and generate the movement maps
+* ```./maps``` -> to extract dbc and maps
+* ```./vmap4extractor && ./vmap4assembler``` -> to extract and assemble the vertical maps
+* ```./mmaps_generator``` -> to extract and generate the movement maps
 
-After the extraction (it can take hours) you will find the extracted files inside the `/var/extractors` folder.
+After the extraction (it can take hours) you will find the extracted files inside the ```/var/extractors``` folder.
 
 **NOTE:** On Linux you probably need to change the permissions of the extracted files since they are processed inside the container by the root user.
-run `sudo chmod -R <youruser>:<yourgroup> /var/extractors` to get the ownership of those files.
+run ```sudo chmod -R <youruser>:<yourgroup> /var/extractors``` to get the ownership of those files.
 
