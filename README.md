@@ -189,7 +189,7 @@ Inside our `docker-compose.yml` there's the `ac-eluna-ts-dev` service which chec
 
 Within your `.env` file set this variable: `DOCKER_CLIENT_DATA_FOLDER=` with the **absolute path** of the "Data" folder of your game client.
 
-Now run this command: `docker-compose run ac-dev-tools bash` to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
+Now run this command: `docker-compose run --rm ac-dev-tools bash` to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
 
 * `./maps` -> to extract dbc and maps
 * `./vmap4extractor && ./vmap4assembler` -> to extract and assemble the vertical maps
