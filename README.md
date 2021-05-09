@@ -198,5 +198,5 @@ Now run this command: **docker-compose run --rm ac-dev-tools bash** to access th
 After the extraction (it can take hours) you will find the extracted files inside the **/var/extractors** folder.
 
 **NOTE:** On Linux you probably need to change the permissions of the extracted files since they are processed inside the container by the root user.
-run **sudo chmod -R <youruser>:<yourgroup> /var/extractors** to get the ownership of those files.
+run **sudo chmod -R youruser:yourgroup /var/extractors** (change youruser:yourgroup accordingly) to get the ownership of those files.
 
