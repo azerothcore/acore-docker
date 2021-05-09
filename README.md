@@ -134,9 +134,16 @@ NOTE 2: This is an experimental system. For complete support we still suggest to
 
 *NOTE: to unlock 100% power of AzerothCore, please use the [main repo](https://github.com/azerothcore/azerothcore-wotlk) and [compile it by your self](https://www.azerothcore.org/wiki/Installation)!*
 
-Despite using the [GM commands](https://www.azerothcore.org/wiki/GM-Commands) to operate within the CLI or in game, you have the flexibility to extend
+Despite using the [GM commands](https://www.azerothcore.org/wiki/GM-Commands) to operate within the CLI or in game, you have the flexibility to extend/configure
 your server with the following techniques:
 
+
+### Change your docker configurations with the environment variables
+
+Within the `/conf/dist` folder you can find a sample of the `.env` file which you can copy inside the root folder of this project to 
+change certain `docker-compose` configurations, such as changing the ports of your docker services or the volumes path etc.
+
+Check the comments inside that file to understand how to use those variables.
 ### Extends the default docker-compose
 
 With the combination of the [docker-compose.override](https://docs.docker.com/compose/extends/) and the environment variables available to configure
@@ -160,16 +167,36 @@ What you need to do is the following:
 You are ready to go! 
 
 Check the [AzerothCore wiki](https://www.azerothcore.org/wiki/documentation_index) to learn how to work with the AC database
-### Customize your server with lua scripts
+### Customize your server with Lua scripts
 
 The worldserver container included in our docker-compose integrates the Eluna module
 
-You just need to install your lua scripts inside the /scripts folder and you are ready to go!
+You just need to install your lua scripts inside the /scripts/lua folder and you are ready to go!
 
 Check the [Eluna documentation](https://github.com/ElunaLuaEngine/Eluna/blob/master/README.md) to learn how to work with this system
 
+### Customize your server with TypeScript
+
+This project also integrates the [Eluna-TS](https://github.com/azerothcore/eluna-ts) system which allows you to create your custom scripts in Typescript! 
+
+What you need is just create an "index.ts" within the `/scripts/typescript` folder and you can directly start by writing your scripts there or creating other files to import.
+
+Inside our `docker-compose.yml` there's the `ac-eluna-ts-dev` service which check changes on `/scripts/typescript` folder to automatically recompile your TS files into Lua.
+
+**Disclaimer:** Eluna-TS is based on [TypeScriptToLua](https://typescripttolua.github.io/) which is a Typescript limited environment. You cannot use all the Typescript features, check their page for more info.
+
 ### Extract client data by your self with the ac-dev-tools container
 
-Work in progress...
+Within your `.env` file set this variable: `DOCKER_CLIENT_DATA_FOLDER=` with the **absolute path** of the "Data" folder of your game client.
 
+Now run this command: `docker-compose run ac-dev-tools bash` to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
+
+* `./maps` -> to extract dbc and maps
+* `./vmap4extractor && ./vmap4assembler` -> to extract and assemble the vertical maps
+* `./mmaps_generator` -> to extract and generate the movement maps
+
+After the extraction (it can take hours) you will find the extracted files inside the `/var/extractors` folder.
+
+**NOTE:** On Linux you probably need to change the permissions of the extracted files since they are processed inside the container by the root user.
+run `sudo chmod -R <youruser>:<yourgroup> /var/extractors` to get the ownership of those files.
 

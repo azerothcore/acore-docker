@@ -97,7 +97,7 @@ services:
   ac-dev-tools:
     <<: *ac-shared-conf
     image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
-    user: ${DOCKER_USER:-acore}
+    user: root
     working_dir: /azerothcore/env/client/
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data

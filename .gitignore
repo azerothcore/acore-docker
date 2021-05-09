@@ -5,5 +5,11 @@
 !/scripts/*/.gitkeep
 !/scripts/typescript/tsconfig.json
 !/scripts/typescript/package.json
-/var
+/var/*
+!/var/.gitkeep
+
+/.env
+
+!.gitkeep
+
 npm_modules
