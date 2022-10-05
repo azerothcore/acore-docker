@@ -26,10 +26,6 @@ jobs:
 
       - name: Configure
         run: |
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           docker --version
           docker-compose --version
 
@@ -37,5 +33,5 @@ jobs:
         run: |
           docker-compose pull 
           docker-compose up ac-db-import
-          docker-compose run --rm --service-ports ac-authserver "source ./apps/ci/ci-dry-run.sh authserver"
-          docker-compose run --rm --service-ports ac-worldserver "source ./apps/ci/ci-dry-run.sh worldserver"
+          docker-compose run --rm --service-ports ac-authserver "cd ./env/dist/bin/ && timeout 5m ./authserver -dry-run"
+          docker-compose run --rm --service-ports ac-worldserver "cd ./env/dist/bin/ && timeout 5m ./worldserver -dry-run"
