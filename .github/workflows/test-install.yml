@@ -1,0 +1,41 @@
+name: Test Installation Process
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+
+concurrency:
+  group: ${{ github.head_ref }} || concat(${{ github.ref }}, ${{ github.workflow }})
+  cancel-in-progress: true
+
+jobs:
+  test-install-process:
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      BUILDKIT_INLINE_CACHE: 1
+
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - uses: actions/checkout@v2
+
+      - name: Configure
+        run: |
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          docker --version
+          docker-compose --version
+
+      - name: Test
+        run: |
+          docker-compose pull 
+          docker-compose up ac-db-import
+          docker-compose run --rm --service-ports ac-authserver "source ./apps/ci/ci-dry-run.sh authserver"
+          docker-compose run --rm --service-ports ac-worldserver "source ./apps/ci/ci-dry-run.sh worldserver"
