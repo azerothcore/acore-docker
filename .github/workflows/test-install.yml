@@ -29,11 +29,11 @@ jobs:
       - name: Configure
         run: |
           docker --version
-          docker-compose --version
+          docker compose --version
 
       - name: Test
         run: |
-          docker-compose pull 
-          docker-compose up ac-db-import
-          docker-compose run --rm ac-authserver /bin/bash -c "timeout 5m ./env/dist/bin/authserver -dry-run"
-          docker-compose run --rm ac-worldserver /bin/bash -c "timeout 5m ./env/dist/bin/worldserver -dry-run"
+          docker compose pull 
+          docker compose up ac-db-import
+          docker compose run --rm ac-authserver /bin/bash -c "timeout 5m ./env/dist/bin/authserver -dry-run"
+          docker compose run --rm ac-worldserver /bin/bash -c "timeout 5m ./env/dist/bin/worldserver -dry-run"
