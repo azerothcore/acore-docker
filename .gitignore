@@ -3,6 +3,7 @@
 !/scripts/*/
 /scripts/*/*
 !/scripts/*/.gitkeep
+!/scripts/typescript/examples
 !/scripts/typescript/tsconfig.json
 !/scripts/typescript/package.json
 /var/*
