@@ -113,11 +113,11 @@ You just need to combine the following 2 commands:
 
 ```Bash
 docker compose pull
-docker-compose rm -s -v -f ac-client-data
+docker compose rm -s -v -f ac-client-data
 docker compose up ac-db-import
 ```
 
-**NOTE:** `docker-compose rm -s -v -f ac-client-data` is used to recreate the client data volume with the newest files. 
+**NOTE:** `docker compose rm -s -v -f ac-client-data` is used to recreate the client data volume with the newest files. 
 If you're using your own maps, you should not use this command and regenerate the maps by your own instead (read the paragraph below)
 
 ## Dev server (Experimental)

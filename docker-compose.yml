@@ -50,8 +50,12 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
     volumes:
       - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
-    volumes_from:
-      - ac-client-data:ro
+      - ac-client-data:/azerothcore/env/dist/data:ro
+    depends_on:
+      ac-database:
+        condition: service_healthy
+      ac-client-data:
+        condition: service_started
 
   ac-authserver:
     <<: *ac-shared-conf
@@ -74,7 +78,7 @@ services:
     <<: *networks
     image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-master}
     volumes:
-      - /azerothcore/env/dist/data
+      - ac-client-data:/azerothcore/env/dist/data
 
   ac-db-import:
     <<: *ac-shared-conf
@@ -119,6 +123,7 @@ services:
 volumes:
   ac-database:
   ac-dev-server:
+  ac-client-data:
 
 networks:
   ac-network:
