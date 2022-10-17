@@ -104,8 +104,8 @@ There are several commands to stop or restart the services, depending on your ne
 
 * **docker compose stop** : just stops the current running services
 * **docker compose restart** : restarts the current running services
-* **docker compose down** : stops and removes the containers.
-* **docker compose down --rmi all -v** : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
+* **docker compose down --remove-orphans** : stops and removes the containers.
+* **docker compose down --rmi all -v --remove-orphans** : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
 
 ### Update your services with latest images
 
