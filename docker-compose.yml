@@ -8,10 +8,6 @@ x-networks: &networks
 x-ac-shared-conf: &ac-shared-conf
   <<: *networks
   working_dir: /azerothcore
-  environment:
-    DB_AUTH_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
-    DB_CHARACTERS_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
-    DB_WORLD_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
   depends_on:
     ac-database:
       condition: service_healthy
