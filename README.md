@@ -109,9 +109,10 @@ There are several commands to stop or restart the services, depending on your ne
 
 ### Update your services with latest images
 
-You just need to combine the following 2 commands:
+You just need to combine the following commands:
 
 ```Bash
+docker compose down
 docker compose pull
 docker compose rm -s -v -f ac-client-data
 docker compose up ac-db-import
