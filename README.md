@@ -5,6 +5,10 @@
 * Table of Contents
 {:toc}
 
+Video Demo:
+
+[![ACore Docker Demonstration](https://img.youtube.com/vi/ldDkI2R431k/0.jpg)](https://www.youtube.com/watch?v=ldDkI2R431k)
+
 The docker compose file included in this folder provides an easy way to use the azerothcore images available on [docker hub](https://hub.docker.com/u/acore) .
 It means that you will be able to run a clean azerothcore server without installing anything but docker.
 
