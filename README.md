@@ -29,7 +29,7 @@ To open a terminal inside a specific folder in your operating system check [this
 
 Now run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
 
-```
+```Bash
 docker compose up
 ```
 
