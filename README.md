@@ -30,86 +30,68 @@ To open a terminal inside a specific folder in your operating system check [this
 Now run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
 
 ```
-docker compose pull
-docker compose up -d ac-authserver
-docker compose run --rm --service-ports ac-worldserver
-```
-
-**NOTE 1: The first installation will take a while because it needs to download the images from the docker hub and create the entire database before running the server**
-
-**NOTE 2: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment**
-
-Do you need a **game client**? check [this page](https://www.azerothcore.org/wiki/client-setup)! 
-
-## Step by step installation
-
-### Pull the latest images
-
-```Bash
-docker compose pull
-```
-
-This command will pull latest images from the docker hub
-
-### Setup the database
-
-```Bash
-docker compose up ac-db-import
-```
-
-It runs the db-assembler tool to import all needed sql inside the mysql container
-NOTE: this service is executed automatically by the auth and world server
-
-### Start services
-
-```Bash
 docker compose up
 ```
 
-To startup your authserver and worlserver
+**Wait for few minutes and you have an up and running AzerothCore!**
 
-**CONGRATULATIONS! now you have an up and running AzerothCore. You can already login with a compatible client**
+ The first installation will take a while because it needs to download the images from the docker hub and create the entire database before running the server**
 
-NOTE: If you need to run them in background instead you can use the following command:
+### How to run in background
+
+If you need to run them in background instead you can use the following command:
 
 ```Bash
 docker compose up -d
 ```
 
-### Access the worlserver console and create an account
+**IMPORTANT:** 
+
+* If the application crashes, docker will automatically restart the container for you
+
+## Access the worlserver console and create an account
 
 With **docker compose up** we have an up and running worldserver as well, but you need to access its interactive shell to
 run commands on the worldserver.
 
-Run the following command to get the ID of the worlserver container:
+
+Open another terminal and use this command to access the worldserver console
 
 ```Bash
-docker compose ps
+docker attach acore-docker-ac-worldserver-1
 ```
 
-You will see a list of docker services. The worlserver service will have a name that ends with **_ac-worldserver_1**
-Use that name together with the following command:
+Now you can use the worlserver console to run azerothcore commands.
 
-```Bash
-docker attach <your-service-name>
-```
-
-Now you can use the worlserver console to run azerothcore commands, including the "account create <user> <password>".
+To create an account you can use: `account create <user> <password> <confirm password>`
 
 NOTE: you can detach from a container and leave it running using the CTRL-p CTRL-q key sequence.
 
 The list of GM commands is available [here](https://www.azerothcore.org/wiki/GM-Commands)
 
-### Stop or restart the services
+Do you need a **game client**? check [this page](https://www.azerothcore.org/wiki/client-setup)! 
+
+## Ask for support
+
+If you need support about the docker installation, use one of the following channels:
+
+* Join our discord community: https://discord.gg/mMgdcx37bA 
+* Report an issue on github: https://github.com/azerothcore/acore-docker/issues
+
+If your issue is about the server or you want to report a bug, check our page on [How to ask for help](https://www.azerothcore.org/wiki/how-to-ask-for-help)
+
+
+## Stop or restart the services
 
 There are several commands to stop or restart the services, depending on your needs:
 
+* **docker compose ps**: list all the running containers
 * **docker compose stop** : just stops the current running services
 * **docker compose restart** : restarts the current running services
 * **docker compose down --remove-orphans** : stops and removes the containers.
 * **docker compose down --rmi all -v --remove-orphans** : ⚠️ stops, removes, and deletes EVERYTHING. Including the volumes with the associated database ⚠️
 
-### Update your services with latest images
+## Update your services with latest images
 
 You just need to combine the following commands:
 
