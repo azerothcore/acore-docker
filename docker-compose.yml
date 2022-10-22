@@ -52,6 +52,8 @@ services:
         condition: service_healthy
       ac-client-data:
         condition: service_started
+      ac-db-import:
+        condition: service_completed_successfully
 
   ac-authserver:
     <<: *ac-shared-conf
@@ -60,6 +62,11 @@ services:
     restart: unless-stopped
     ports:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
+    depends_on:
+      ac-database:
+        condition: service_healthy
+      ac-db-import:
+        condition: service_completed_successfully
 
   ac-eluna-ts-dev:
     image: acore/eluna-ts:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
@@ -82,7 +89,7 @@ services:
     command: ./env/dist/bin/dbimport
     environment:
       AC_DISABLE_INTERACTIVE: "1"
-    profiles: [db-import]
+    #profiles: [db-import]
 
   ac-dev-server:
     <<: *ac-shared-conf

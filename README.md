@@ -30,13 +30,14 @@ To open a terminal inside a specific folder in your operating system check [this
 Now run this magic command sequence inside the downloaded folder to have everything up and running (with an interactive worldserver terminal): 
 
 ```
-docker compose pull 
-docker compose up ac-db-import
+docker compose pull
 docker compose up -d ac-authserver
 docker compose run --rm --service-ports ac-worldserver
 ```
 
-**NOTE: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment**
+**NOTE 1: The first installation will take a while because it needs to download the images from the docker hub and create the entire database before running the server**
+
+**NOTE 2: The commands above should not be used if you want to keep your server up and running. Please, follow the steps below to proper setup your environment**
 
 Do you need a **game client**? check [this page](https://www.azerothcore.org/wiki/client-setup)! 
 
@@ -57,6 +58,7 @@ docker compose up ac-db-import
 ```
 
 It runs the db-assembler tool to import all needed sql inside the mysql container
+NOTE: this service is executed automatically by the auth and world server
 
 ### Start services
 
@@ -115,7 +117,6 @@ You just need to combine the following commands:
 docker compose down
 docker compose pull
 docker compose rm -s -v -f ac-client-data
-docker compose up ac-db-import
 ```
 
 **NOTE:** `docker compose rm -s -v -f ac-client-data` is used to recreate the client data volume with the newest files. 
