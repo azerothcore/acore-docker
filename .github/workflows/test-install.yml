@@ -21,10 +21,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
+          # - os: macos-latest TODO: install docker
           - os: ubuntu-20.04
           - os: ubuntu-latest
-          - os: windows-latest
+          # - os: windows-latest TODO: install docker
     steps:
       - uses: actions/checkout@v2
 
@@ -34,6 +34,7 @@ jobs:
           docker compose --version
 
       - name: Test
+        shell: bash
         run: |
           cp .github/docker-compose.dry-run.yml docker-compose.override.yml
           docker compose up --attach ac-worldserver --attach ac-authserver
