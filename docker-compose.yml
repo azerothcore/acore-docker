@@ -40,7 +40,7 @@ services:
     <<: *ac-shared-conf
     stdin_open: true
     tty: true
-    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
     restart: unless-stopped
     privileged: true
     user: ${DOCKER_USER:-acore}
@@ -61,7 +61,7 @@ services:
   ac-authserver:
     <<: *ac-shared-conf
     tty: true
-    image: acore/ac-wotlk-authserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-authserver:${DOCKER_IMAGE_TAG:-master}
     restart: unless-stopped
     ports:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
@@ -72,14 +72,16 @@ services:
         condition: service_completed_successfully
 
   ac-eluna-ts-dev:
-    image: acore/eluna-ts:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/eluna-ts:${DOCKER_IMAGE_TAG:-master}
+    # the build:lib is done in the healthcheck
+    command: sh -c "cd /eluna-ts/modules && npm install && cd /eluna-ts && npm run dev"
+    # small workaround to make the other services to wait for the eluna-ts build
     healthcheck:
       test: sh -c "cd /eluna-ts/modules/eluna-ts && npm run build:lib && npm run build"
       timeout: 60s
       retries: 10
       interval: 5s
       start_period: 10s
-    command: sh -c "cd /eluna-ts/modules && npm install && cd /eluna-ts && npm run dev"
     restart: unless-stopped
     volumes:
       # from typescript
@@ -95,7 +97,7 @@ services:
 
   ac-db-import:
     <<: *ac-shared-conf
-    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
     command: ./env/dist/bin/dbimport
     tmpfs:
       - /azerothcore/env/dist/temp
@@ -106,7 +108,7 @@ services:
   ac-dev-server:
     <<: *ac-shared-conf
     tty: true
-    image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master}
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
@@ -117,7 +119,7 @@ services:
 
   ac-dev-tools:
     <<: *ac-shared-conf
-    image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
+    image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master}
     user: root
     working_dir: /azerothcore/env/client/
     volumes:
