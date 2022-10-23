@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  ac-worldserver:
+    command: env/dist/bin/worldserver -dry-run
+    restart: "no"
+  ac-authserver:
+    command: env/dist/bin/authserver -dry-run
+    restart: "no"

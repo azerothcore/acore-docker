@@ -11,6 +11,8 @@ x-ac-shared-conf: &ac-shared-conf
   depends_on:
     ac-database:
       condition: service_healthy
+    ac-eluna-ts-dev:
+      condition: service_started
 
 services:
   ac-database:
@@ -71,7 +73,14 @@ services:
 
   ac-eluna-ts-dev:
     image: acore/eluna-ts:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
-    command: sh -c "cd /eluna-ts/modules && npm install && cd /eluna-ts && npm run build:lib && npm run dev"
+    healthcheck:
+      test: sh -c "cd /eluna-ts/modules/eluna-ts && npm run build:lib && npm run build"
+      timeout: 60s
+      retries: 10
+      interval: 5s
+      start_period: 10s
+    command: sh -c "cd /eluna-ts/modules && npm install && cd /eluna-ts && npm run dev"
+    restart: unless-stopped
     volumes:
       # from typescript
       - ./scripts/typescript:/eluna-ts/modules

@@ -33,7 +33,5 @@ jobs:
 
       - name: Test
         run: |
-          docker compose pull 
-          docker compose up ac-db-import
-          docker compose run --rm ac-authserver /bin/bash -c "timeout 5m ./env/dist/bin/authserver -dry-run"
-          docker compose run --rm ac-worldserver /bin/bash -c "timeout 5m ./env/dist/bin/worldserver -dry-run"
+          cp .github/docker-compose.dry-run.yml docker-compose.override.yml
+          docker compose up --attach ac-worldserver --attach ac-authserver
