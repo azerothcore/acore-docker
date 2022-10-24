@@ -108,19 +108,30 @@ docker compose rm -s -v -f ac-client-data
 **NOTE:** `docker compose rm -s -v -f ac-client-data` is used to recreate the client data volume with the newest files. 
 If you're using your own maps, you should not use this command and regenerate the maps by your own instead (read the paragraph below)
 
-## Dev server (Experimental)
-
-```Bash
-docker compose up ac-dev-server [-d]
-```
+## Dev server
 
 The ac-dev-server is a special container that provides a complete workspace that includes all the sources and dependencies to build your own server.
-This image is intended to be used together with the [VSCode Docker extension](https://code.visualstudio.com/docs/containers/overview)
+The container of the ac-dev-server is an isolated instance, it doesn't expose any file with the host and all the changes are stored into a docker volume.
+This image is intended to be used together with the [VSCode Docker extension](https://code.visualstudio.com/docs/containers/overview).
 
-NOTE: This container uses the same mysql instance of the ac-authserver/worldserver, so it's not suggested to use all the services to avoid
-issues with the database consistence. However, you can always extends the docker compose to add a second database instance (read the paragraph below)
+The quickest way to access and work with the ac-dev-server is the following:
 
-NOTE 2: This is an experimental system. For complete support we still suggest to use the docker layer of the [azerothcore-wotlk]((https://github.com/azerothcore/azerothcore-wotlk)) repository.
+1. Run this command to stop all the containers: `docker compose down`
+
+2. Install [visual studio code](https://code.visualstudio.com/) and the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+    
+
+3. Start VS Code in the acore-docker folder, run the `Dev Containers: Reopen in container...` command from the Command Palette (F1) or quick actions Status bar item (green button on the bottom left of your screen)
+
+    ![Screen](https://code.visualstudio.com/assets/docs/remote/common/remote-dev-status-bar.png)
+
+4. Once inside the container open a vscode terminal and run this command `git config --global --add safe.directory '*' && git reset --hard && git pull origin master`. 
+   You will notice that the file list available in VSCode is basically the [azerothcore-wotlk](https://github.com/azerothcore/azerothcore-wotlk) repository.
+5. Now you can start working with the azerothcore sources into a pre-configured ubuntu environment with all the dependencies pre-installed
+6. To build and run your server you can refer to [this guide](https://www.azerothcore.org/wiki/ac-dashboard-core-installation) at the paragraph "Build everything from scratch".
+
+NOTE: This container uses the same mysql instance of the ac-authserver/worldserver. Do not run the authserver and worldserver together with the dev-server to avoid
+issues with the database consistency. If you want to setup a separate database for the dev server you can always extends the docker compose to add a second database instance (read the paragraph below)
 
 ## Customize your server
 
