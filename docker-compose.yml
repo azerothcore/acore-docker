@@ -49,7 +49,10 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
     volumes:
       - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
-      - ac-client-data:/azerothcore/env/dist/data:ro
+      - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc:ro
+      - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps:ro
+      - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps:ro
+      - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/dist/data/mmaps:ro
     depends_on:
       ac-database:
         condition: service_healthy
@@ -93,7 +96,10 @@ services:
     <<: *networks
     image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-master}
     volumes:
-      - ac-client-data:/azerothcore/env/dist/data
+      - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc
+      - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps
+      - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps
+      - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/dist/data/mmaps
 
   ac-db-import:
     <<: *ac-shared-conf
@@ -124,10 +130,10 @@ services:
     working_dir: /azerothcore/env/client/
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
-      - ${DOCKER_VOL_TOOLS_DBC:-./var/extractors/dbc}:/azerothcore/env/client/dbc
-      - ${DOCKER_VOL_TOOLS_MAPS:-./var/extractors/maps}:/azerothcore/env/client/maps
-      - ${DOCKER_VOL_TOOLS_VMAPS:-./var/extractors/vmaps}:/azerothcore/env/client/vmaps
-      - ${DOCKER_VOL_TOOLS_MMAPS:-./var/extractors/mmaps}:/azerothcore/env/client/mmaps
+      - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/client/dbc
+      - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/client/maps
+      - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/client/vmaps
+      - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/client/mmaps
     profiles: [dev]
 
   phpmyadmin:
@@ -142,7 +148,10 @@ services:
 volumes:
   ac-database:
   ac-dev-server:
-  ac-client-data:
+  ac-client-data-dbc:
+  ac-client-data-maps:
+  ac-client-data-vmaps:
+  ac-client-data-mmaps:
 
 networks:
   ac-network:
