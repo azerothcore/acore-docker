@@ -114,6 +114,7 @@ services:
   ac-dev-server:
     <<: *ac-shared-conf
     tty: true
+    privileged: true
     image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master}
     ports:
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
