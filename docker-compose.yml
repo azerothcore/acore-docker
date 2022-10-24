@@ -11,8 +11,6 @@ x-ac-shared-conf: &ac-shared-conf
   depends_on:
     ac-database:
       condition: service_healthy
-    ac-eluna-ts-dev:
-      condition: service_started
 
 services:
   ac-database:
@@ -54,8 +52,8 @@ services:
       - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps:ro
       - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/dist/data/mmaps:ro
     depends_on:
-      ac-database:
-        condition: service_healthy
+      ac-eluna-ts-dev:
+        condition: service_started
       ac-client-data:
         condition: service_started
       ac-db-import:
