@@ -128,10 +128,22 @@ The quickest way to access and work with the ac-dev-server is the following:
 4. Once inside the container open a vscode terminal and run this command `git config --global --add safe.directory '*' && git reset --hard && git pull origin master`. 
    You will notice that the file list available in VSCode is basically the [azerothcore-wotlk](https://github.com/azerothcore/azerothcore-wotlk) repository.
 5. Now you can start working with the azerothcore sources into a pre-configured ubuntu environment with all the dependencies pre-installed
-6. To build and run your server you can refer to [this guide](https://www.azerothcore.org/wiki/ac-dashboard-core-installation) at the paragraph "Build everything from scratch".
+6. To build and run your server run `./acore.sh compiler build` command. You can refer to [this guide](https://www.azerothcore.org/wiki/ac-dashboard-core-installation) at the paragraph "Build everything from scratch".
+7. Once it's done you can download the client data by executing this command: `./acore.sh client data`
+8. Finally you should be ready to run the authserver and the worldserver available inside the `env/dist/bin` folder. You can also use the restarters
+   available in the `./acore.sh` dashboard
 
-NOTE: This container uses the same mysql instance of the ac-authserver/worldserver. Do not run the authserver and worldserver together with the dev-server to avoid
+IMPORTANT: 
+
+* This container uses the same mysql instance of the ac-authserver/worldserver. Do not run the authserver and worldserver together with the dev-server to avoid
 issues with the database consistency. If you want to setup a separate database for the dev server you can always extends the docker compose to add a second database instance (read the paragraph below)
+
+* The dev-server docker compose exposes the following ports: 3724 (authserver), 8085 (worldserver), 7878 (soap service)
+
+* To share files between your host and the dev-server you can use the `var/shared` folder
+
+* This dev-container includes all the tools needed to build the AC without configure anything. Look around and play with the vscode workspace to discover all the features available.
+
 
 ## Customize your server
 

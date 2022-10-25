@@ -8,6 +8,9 @@
 !/scripts/typescript/package.json
 /var/*
 !/var/.gitkeep
+!/var/shared
+/var/shared/*
+!/var/shared/.gitkeep
 
 /.env
 
