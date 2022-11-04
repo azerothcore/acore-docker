@@ -21,13 +21,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
+          # - os: macos-latest TODO: install docker
           - os: ubuntu-20.04
           - os: ubuntu-latest
           # - os: windows-latest TODO: install docker
     steps:
       - uses: actions/checkout@v2
-      - uses: docker-practice/actions-setup-docker@master
 
       - name: Configure
         run: |
