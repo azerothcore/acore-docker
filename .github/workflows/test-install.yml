@@ -59,5 +59,6 @@ jobs:
         shell: bash
         run: |
           cp .github/docker-compose.dev-server.yml docker-compose.override.yml
+          cp .github/config.sh config.sh
           docker compose run --no-deps ac-dev-server bash -c "./acore.sh compiler build"
           docker compose run --no-deps ac-dev-server bash -c "./env/dist/bin/dbimport"
