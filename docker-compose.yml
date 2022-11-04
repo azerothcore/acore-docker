@@ -118,6 +118,7 @@ services:
   ac-dev-database:
     image: mysql:8.0
     restart: unless-stopped
+    profiles: [dev]
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
     ports:
