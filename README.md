@@ -137,14 +137,16 @@ The quickest way to access and work with the ac-dev-server is the following:
 
 IMPORTANT: 
 
-* This container uses the same mysql instance of the ac-authserver/worldserver. Do not run the authserver and worldserver together with the dev-server to avoid
-issues with the database consistency. If you want to setup a separate database for the dev server you can always extends the docker compose to add a second database instance (read the paragraph below)
+* This container uses a different instance of the mysql database. It means that you won't have, by default, the same data available on the `ac-authserver` and `ac-worldserver` services
 
 * The dev-server docker compose exposes the following ports: 3724 (authserver), 8085 (worldserver), 7878 (soap service)
 
 * To share files between your host and the dev-server you can use the `var/shared` folder
 
 * This dev-container includes all the tools needed to build the AC without configure anything. Look around and play with the vscode workspace to discover all the features available.
+
+* if you have any file permission issues once inside the container, please run this command: 
+`sudo chown acore:acore -R .`
 
 
 ## Customize your server

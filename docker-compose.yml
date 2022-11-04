@@ -115,23 +115,58 @@ services:
       AC_DISABLE_INTERACTIVE: "1"
     #profiles: [db-import]
 
-  ac-dev-server:
-    <<: *ac-shared-conf
-    tty: true
-    privileged: true
-    image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master}
+  ac-dev-database:
+    image: mysql:8.0
+    restart: unless-stopped
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     ports:
+      - ${DOCKER_DB_EXTERNAL_PORT:-63306}:3306
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DOCKER_DB_ROOT_PASSWORD:-password}
+    volumes:
+      - type: volume
+        source: ac-dev-database
+        target: /var/lib/mysql
+    healthcheck:
+        test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
+        interval: 2s
+        timeout: 40s
+        retries: 20
+    networks:
+      ac-dev-network:
+        aliases:
+          - ac-database # needed by the server *.conf file
+
+  ac-dev-server:
+    <<: *networks
+    tty: true
+    privileged: true
+    user: root
+    image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-master}
+    environment:
+      DATAPATH: "/azerothcore/env/dist/data"
+      DOCKER_ETC_FOLDER: "env/docker/etc"
     profiles: [dev]
     volumes:
       - ac-dev-server:/azerothcore
+      - ./var/shared:/azerothcore/var/shared
+    network_mode: service:ac-dev-database
+    working_dir: /azerothcore
+    depends_on:
+      ac-dev-database:
+        condition: service_healthy
+    networks:
+      - ac-dev-network
 
   ac-dev-tools:
     <<: *ac-shared-conf
     image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master}
-    user: root
     working_dir: /azerothcore/env/client/
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
@@ -153,6 +188,7 @@ services:
 volumes:
   ac-database:
   ac-dev-server:
+  ac-dev-database:
   ac-client-data-dbc:
   ac-client-data-maps:
   ac-client-data-vmaps:
@@ -160,3 +196,4 @@ volumes:
 
 networks:
   ac-network:
+  ac-dev-network:
