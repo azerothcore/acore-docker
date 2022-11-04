@@ -31,10 +31,33 @@ jobs:
       - name: Configure
         run: |
           docker --version
-          docker compose --version
+          docker compose version
 
       - name: Test
         shell: bash
         run: |
           cp .github/docker-compose.dry-run.yml docker-compose.override.yml
           docker compose up --attach ac-worldserver --attach ac-authserver
+
+  test-dev-install-process:
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      BUILDKIT_INLINE_CACHE: 1
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # - os: macos-latest TODO: install docker
+          # - os: ubuntu-20.04
+          - os: ubuntu-latest
+          # - os: windows-latest TODO: install docker
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test
+        shell: bash
+        run: |
+          cp .github/docker-compose.dev-server.yml docker-compose.override.yml
+          docker compose run --no-deps ac-dev-server bash -c "./acore.sh compiler build"
+          docker compose run --no-deps ac-dev-server bash -c "./env/dist/bin/dbimport"
