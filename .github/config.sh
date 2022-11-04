@@ -1,5 +1,5 @@
 CDEBUG=OFF
 CTYPE=Release
-CAPPS_BUILD=dbimport-only
+CAPPS_BUILD=none
 CTOOLS_BUILD=db-only
 
