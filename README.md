@@ -127,7 +127,12 @@ The quickest way to access and work with the ac-dev-server is the following:
 
     ![Screen](https://code.visualstudio.com/assets/docs/remote/common/remote-dev-status-bar.png)
 
-4. Once inside the container open a vscode terminal and run this command `git config --global --add safe.directory '*' && git reset --hard && git pull origin master`. 
+4. Once inside the container open a vscode terminal and run this command 
+
+   ```bash
+      git config --global --add safe.directory '*' && git reset --hard && git pull origin master
+   ``` 
+
    You will notice that the file list available in VSCode is basically the [azerothcore-wotlk](https://github.com/azerothcore/azerothcore-wotlk) repository.
 5. Now you can start working with the azerothcore sources into a pre-configured ubuntu environment with all the dependencies pre-installed
 6. To build and run your server run `./acore.sh compiler build` command. You can refer to [this guide](https://www.azerothcore.org/wiki/ac-dashboard-core-installation) at the paragraph "Build everything from scratch".
