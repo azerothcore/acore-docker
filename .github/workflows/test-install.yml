@@ -55,10 +55,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # TODO: fix after this is solved: https://github.com/docker/compose/issues/9515#issuecomment-1303538917
       - name: Test
         shell: bash
         run: |
           cp .github/docker-compose.dev-server.yml docker-compose.override.yml
           cp .github/config.sh config.sh
+          docker compose up -d ac-dev-database
           docker compose run --no-deps ac-dev-server bash -c "./acore.sh compiler build"
           docker compose run --no-deps ac-dev-server bash -c "./env/dist/bin/dbimport"
