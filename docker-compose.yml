@@ -40,6 +40,8 @@ services:
     <<: *ac-shared-conf
     stdin_open: true
     tty: true
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
     restart: unless-stopped
     privileged: true
@@ -169,6 +171,8 @@ services:
     <<: *ac-shared-conf
     image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-master}
     working_dir: /azerothcore/env/client/
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
       - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/client/dbc
