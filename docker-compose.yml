@@ -102,6 +102,7 @@ services:
     <<: *networks
     image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-7.0.0-dev.0}
     volumes:
+      - ${DOCKER_VOL_TOOLS_CAMERAS:-ac-client-data-cameras}:/azerothcore/env/dist/data/Cameras
       - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc
       - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps
       - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps
@@ -175,6 +176,7 @@ services:
       - SYS_NICE  # CAP_SYS_NICE
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
+      - ${DOCKER_VOL_TOOLS_CAMERAS:-ac-client-data-cameras}:/azerothcore/env/dist/data/Cameras
       - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/client/dbc
       - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/client/maps
       - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/client/vmaps
@@ -194,6 +196,7 @@ volumes:
   ac-database:
   ac-dev-server:
   ac-dev-database:
+  ac-client-data-cameras:
   ac-client-data-dbc:
   ac-client-data-maps:
   ac-client-data-vmaps:
