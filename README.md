@@ -235,8 +235,8 @@ Now you can change the configurations as you wish and restart the server.
 
 You can find the list of all the configurations available in these files:
 
-1. worldserver.conf: https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/worldserver/worldserver.conf.dist
-2. authserver.conf: https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/authserver/authserver.conf.dist
+1. [worldserver.conf](https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/worldserver/worldserver.conf.dist)
+2. [authserver.conf](https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/authserver/authserver.conf.dist)
 
 ### Customize your server with the database
 
