@@ -182,7 +182,7 @@ Check the /conf/dist folder that contains an override file ready to be used to i
 
 You also need to create a `worldserver2.conf` file under the `conf/` folder. You can do that by running this command:
 
-```docker compose cp ac-worldserver:/azerothcore/env/dist/etc/worldserver.conf conf```
+```docker compose cp ac-worldserver:/azerothcore/env/dist/etc/worldserver.conf conf/worldserver2.conf```
 
 Create the following configurations inside the worldserver2.conf:
 
