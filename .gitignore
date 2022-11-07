@@ -11,6 +11,8 @@
 !/var/shared
 /var/shared/*
 !/var/shared/.gitkeep
+/conf/*
+!/conf/dist
 
 /.env
 

@@ -77,6 +77,9 @@ The list of GM commands is available [here](https://www.azerothcore.org/wiki/GM-
 
 Do you need a **game client**? check [this page](https://www.azerothcore.org/wiki/client-setup)! 
 
+
+**IMPORTANT** to read the list of all the containers you can attach to, run the `docker ps` command.
+
 ## Ask for support
 
 If you need support about the docker installation, use one of the following channels:
@@ -175,7 +178,65 @@ the AzerothCore project, you can extend this docker by adding external and share
 
 ### How to create a second multirealm environment
 
-Check the /conf/dist folder that contains an override file ready to be used to implement a secondary worldserver
+Check the /conf/dist folder that contains an override file ready to be used to implement a secondary worldserver. Just copy-paste this file in the same folder of the `docker-compose.yml`
+
+You also need to create a `worldserver2.conf` file under the `conf/` folder. You can do that by running this command:
+
+```docker compose cp ac-worldserver:/azerothcore/env/dist/etc/worldserver.conf conf```
+
+Create the following configurations inside the worldserver2.conf:
+
+```
+RealmID = 2
+LoginDatabaseInfo     = "ac-database;3306;root;password;acore_auth"
+WorldDatabaseInfo     = "ac-database;3306;root;password;acore_world2"
+CharacterDatabaseInfo = "ac-database;3306;root;password;acore_characters2"
+```
+
+Finally you need to access your database and change the ```acore_auth.realmlist``` table by adding a second realm with the port ```8086```
+
+Now you can restart your containers by running:
+
+```
+docker compose down
+docker compose up
+```
+
+### Changing your server configurations
+
+To change the `*.conf` files of your server you need to extract them from the container and then create a volume to re-inject the modified file
+into the container again.
+
+To do this you can use these commands to copy the files from the container to your conf folder:
+
+```
+docker compose cp ac-worldserver:/azerothcore/env/dist/etc/authserver.conf conf
+docker compose cp ac-worldserver:/azerothcore/env/dist/etc/worldserver.conf conf
+docker compose cp ac-worldserver:/azerothcore/env/dist/etc/dbimport.conf conf
+```
+
+then create a `docker-compose.override.yml` file in the same folder of the `docker-compose.yml` file 
+and add this configurations:
+
+```
+version: '3.9'
+
+services:
+  ac-worldserver:
+    volumes:
+      - ./conf/worldserver.conf:/azerothcore/env/dist/etc/worldserver.conf
+      - ./conf/authserver.conf:/azerothcore/env/dist/etc/authserver.conf
+      - ./conf/dbimport.conf:/azerothcore/env/dist/etc/dbimport.conf
+```
+
+In this way you can inject the 3 extracted files from your host into the container
+
+Now you can change the configurations as you wish and restart the server.
+
+You can find the list of all the configurations available in these files:
+
+1. worldserver.conf: https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/worldserver/worldserver.conf.dist
+2. authserver.conf: https://github.com/azerothcore/azerothcore-wotlk/blob/master/src/server/apps/authserver/authserver.conf.dist
 
 ### Customize your server with the database
 
@@ -213,10 +274,10 @@ Inside our **docker compose.yml** there's the **ac-eluna-ts-dev** service which 
 
 Within your **.env** file set this variable: **DOCKER_CLIENT_DATA_FOLDER=** with the **absolute path** of the "Data" folder of your game client.
 
-Now run this command: **docker compose run --rm ac-dev-tools bash** to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
+Now run this command: **docker compose run --rm --no-deps ac-dev-tools bash** to access the shell of the **ac-dev-tools** container. Once inside you can run the following commands:
 
-* **./maps** -> to extract dbc and maps
-* **./vmap4extractor && ./vmap4assembler** -> to extract and assemble the vertical maps
+* **./map_extractor** -> to extract dbc, Cameras and maps
+* **./vmap4_extractor && ./vmap4_assembler** -> to extract and assemble the vertical maps
 * **./mmaps_generator** -> to extract and generate the movement maps
 
 After the extraction (it can take hours) the file will be available inside the `ac-client-data-*` volumes.

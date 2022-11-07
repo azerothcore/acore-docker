@@ -112,8 +112,6 @@ services:
     <<: *ac-shared-conf
     image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-7.0.0-dev.0}
     command: ./env/dist/bin/dbimport
-    tmpfs:
-      - /azerothcore/env/dist/temp
     environment:
       AC_DISABLE_INTERACTIVE: "1"
     #profiles: [db-import]
@@ -125,7 +123,7 @@ services:
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
     ports:
-      - ${DOCKER_DB_EXTERNAL_PORT:-63306}:3306
+      - ${DOCKER_DB_EXTERNAL_PORT:-63300}:3306
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
@@ -148,7 +146,6 @@ services:
           - ac-database # needed by the server *.conf file
 
   ac-dev-server:
-    <<: *networks
     tty: true
     privileged: true
     user: root

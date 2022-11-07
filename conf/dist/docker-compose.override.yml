@@ -1,24 +1,17 @@
 version: '3.9'
 
-x-networks: &networks
-  networks:
-    - ac-network
-
-x-ac-shared-conf: &ac-shared-conf
-  <<: *networks
-  working_dir: /azerothcore
-  image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master} # name of the generated image after built locally
-  environment:
-    DBLIST: WORLD2
-    DB_WORLD_NAME: acore_world2
-    DB_WORLD2_CONF: "MYSQL_USER='root'; MYSQL_PASS='password'; MYSQL_HOST='ac-database'; MYSQL_PORT='3306';"
-  depends_on:
-    ac-database:
-      condition: service_healthy
-
 services:
+  #=========================
+  #
+  # This override file contains all the configuration needed
+  # to setup a second realm. 
+  # Remember to add this realm into your realmlist database.
+  #
+  #==========================
+
   ac-worldserver-2:
-    <<: *ac-shared-conf
+    working_dir: /azerothcore
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
     stdin_open: true
     tty: true
     restart: unless-stopped
@@ -28,16 +21,34 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7879}:7878
     networks:
       - ac-network
-    volumes_from:
-      - ac-client-data:ro
-
-  ac-db-import-2:
-    <<: *ac-shared-conf
-    command: ./acore.sh db-assembler import-all
-    profiles: [db-import]
+    volumes:
+      - ./conf/worldserver2.conf:/azerothcore/env/dist/etc/worldserver.conf
+      - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
+      - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc:ro
+      - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps:ro
+      - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps:ro
+      - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/dist/data/mmaps:ro
     depends_on:
       ac-database:
         condition: service_healthy
+      ac-eluna-ts-dev:
+        condition: service_started
+      ac-client-data:
+        condition: service_started
+      ac-db-import-2:
+        condition: service_completed_successfully
 
-networks:
-  ac-network:
+  ac-db-import-2:
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
+    command: ./env/dist/bin/dbimport
+    environment:
+      AC_DISABLE_INTERACTIVE: "1"
+    volumes:
+      - ./conf/worldserver2.conf:/azerothcore/env/dist/etc/dbimport.conf
+    networks:
+      - ac-network
+    depends_on:
+      ac-database:
+        condition: service_healthy
+      ac-db-import:
+        condition: service_completed_successfully
