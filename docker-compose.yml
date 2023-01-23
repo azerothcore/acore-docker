@@ -83,7 +83,7 @@ services:
   ac-eluna-ts-dev:
     image: acore/eluna-ts:master
     # the build:lib is done in the healthcheck
-    command: sh -c "cd /eluna-ts/modules && npm install && cd /eluna-ts && npm run dev"
+    command: sh -c "cd /eluna-ts/modules && touch index.ts && npm install && cd /eluna-ts && npm run dev"
     # small workaround to make the other services to wait for the eluna-ts build
     healthcheck:
       test: sh -c "cd /eluna-ts/modules/eluna-ts && npm run build:lib && npm run build"
