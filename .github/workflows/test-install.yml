@@ -37,7 +37,7 @@ jobs:
         shell: bash
         run: |
           cp .github/docker-compose.dry-run.yml docker-compose.override.yml
-          docker compose up --attach ac-worldserver --attach ac-authserver
+          docker compose up --attach ac-db-import --attach ac-worldserver --attach ac-authserver
 
   test-dev-install-process:
     env:
