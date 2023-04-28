@@ -41,7 +41,7 @@ docker compose up
 
  The first installation will take a while because it needs to download the images from the docker hub and create the entire database before running the server**
  
- ⚠️ WARNING ⚠️: if you encounter the error `ERROR: for ac-worldserver Container "abcdefg12345" exited with code 1.` please update docker to the latest version.
+ ⚠️ WARNING ⚠️: if you encounter the error `ERROR: for ac-worldserver Container "abcdefg12345" exited with code 1.` or `ERROR: 'network_mode' and 'networks' cannot be combined` please update docker and docker-compose to the latest version.
 
 ### How to run in background
 
