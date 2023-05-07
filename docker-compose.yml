@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 # extension field: https://docs.docker.com/compose/compose-file/compose-file-v3/#extension-fields
 x-networks: &networks
@@ -18,7 +18,7 @@ services:
     image: mysql:8.0
     restart: unless-stopped
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
     ports:
       - ${DOCKER_DB_EXTERNAL_PORT:-63306}:3306
     expose:
@@ -30,10 +30,10 @@ services:
         source: ac-database
         target: /var/lib/mysql
     healthcheck:
-        test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
-        interval: 2s
-        timeout: 40s
-        retries: 20
+      test: '/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute "SHOW DATABASES;"'
+      interval: 2s
+      timeout: 40s
+      retries: 20
 
   ac-worldserver:
     container_name: acore-docker-ac-worldserver-1 # fixed container name to simplify the attach process
@@ -41,7 +41,7 @@ services:
     stdin_open: true
     tty: true
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
     image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-7.0.0-dev.0}
     restart: unless-stopped
     privileged: true
@@ -121,7 +121,7 @@ services:
     restart: unless-stopped
     profiles: [dev]
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
     ports:
       - ${DOCKER_DB_EXTERNAL_PORT:-63300}:3306
       - ${DOCKER_WORLD_EXTERNAL_PORT:-8085}:8085
@@ -136,10 +136,10 @@ services:
         source: ac-dev-database
         target: /var/lib/mysql
     healthcheck:
-        test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
-        interval: 2s
-        timeout: 40s
-        retries: 20
+      test: '/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute "SHOW DATABASES;"'
+      interval: 2s
+      timeout: 40s
+      retries: 20
     networks:
       ac-dev-network:
         aliases:
@@ -157,7 +157,7 @@ services:
     volumes:
       - ac-dev-server:/azerothcore
       - ./var/shared:/azerothcore/var/shared
-    network_mode: service:ac-dev-database
+    # network_mode: service:ac-dev-database
     working_dir: /azerothcore
     depends_on:
       ac-dev-database:
@@ -170,7 +170,7 @@ services:
     image: acore/ac-wotlk-tools:${DOCKER_IMAGE_TAG:-7.0.0-dev.0}
     working_dir: /azerothcore/env/client/
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
     volumes:
       - ${DOCKER_CLIENT_DATA_FOLDER:-./var/client}:/azerothcore/env/client/Data
       - ${DOCKER_VOL_TOOLS_CAMERAS:-ac-client-data-cameras}:/azerothcore/env/dist/data/Cameras
