@@ -138,7 +138,6 @@ services:
       AC_WORLD_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_world"
       AC_CHARACTER_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_characters"
       AC_CLOSE_IDLE_CONNECTIONS: "0"
-    #profiles: [db-import]
 
   ac-dev-database:
     image: mysql:8.0
@@ -181,6 +180,7 @@ services:
     volumes:
       - ac-dev-server:/azerothcore
       - ./var/shared:/azerothcore/var/shared
+      - ./conf:/azerothcore/env/dist/etc/
     # network_mode: service:ac-dev-database
     working_dir: /azerothcore
     depends_on:
