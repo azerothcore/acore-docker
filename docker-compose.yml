@@ -170,7 +170,12 @@ services:
     image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-7.0.0-dev.1}
     environment:
       DATAPATH: "/azerothcore/env/dist/data"
-      DOCKER_ETC_FOLDER: "env/docker/etc"
+      DOCKER_ETC_FOLDER: "env/dist/etc"
+      AC_LOGIN_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_auth"
+      AC_WORLD_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_world"
+      AC_CHARACTER_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_characters"
+      AC_DATA_DIR: "/azerothcore/env/dist/data"
+      AC_LOGS_DIR: "/azerothcore/env/dist/logs"
     profiles: [dev]
     volumes:
       - ac-dev-server:/azerothcore
