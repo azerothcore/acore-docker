@@ -51,12 +51,18 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
     expose:
       - 8085
-    volumes:
       - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
       - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc:ro
       - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps:ro
       - ${DOCKER_VOL_TOOLS_VMAPS:-ac-client-data-vmaps}:/azerothcore/env/dist/data/vmaps:ro
       - ${DOCKER_VOL_TOOLS_MMAPS:-ac-client-data-mmaps}:/azerothcore/env/dist/data/mmaps:ro
+    environment:
+      AC_DATA_DIR: "/azerothcore/env/dist/data"
+      AC_LOGS_DIR: "/azerothcore/env/dist/logs"
+      AC_LOGIN_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_auth"
+      AC_WORLD_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_world"
+      AC_CHARACTER_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_characters"
+      AC_CLOSE_IDLE_CONNECTIONS: "0"
     depends_on:
       ac-eluna-ts-dev:
         condition: service_started
@@ -74,6 +80,12 @@ services:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
     expose:
       - 3724
+    environment:
+      AC_LOGS_DIR: "/azerothcore/env/dist/logs"
+      AC_TEMP_DIR: "/azerothcore/env/dist/temp"
+      AC_LOGIN_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_auth"
+      AC_SQLDRIVER_LOG_FILE: "SQLDriver.log"
+      AC_SQLDRIVER_QUERY_LOGGING: "1"
     depends_on:
       ac-database:
         condition: service_healthy
@@ -114,6 +126,12 @@ services:
     command: ./env/dist/bin/dbimport
     environment:
       AC_DISABLE_INTERACTIVE: "1"
+      AC_DATA_DIR: "/azerothcore/env/dist/data"
+      AC_LOGS_DIR: "/azerothcore/env/dist/logs"
+      AC_LOGIN_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_auth"
+      AC_WORLD_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_world"
+      AC_CHARACTER_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_characters"
+      AC_CLOSE_IDLE_CONNECTIONS: "0"
     #profiles: [db-import]
 
   ac-dev-database:
@@ -152,7 +170,12 @@ services:
     image: acore/ac-wotlk-dev-server:${DOCKER_IMAGE_TAG:-7.0.0-dev.1}
     environment:
       DATAPATH: "/azerothcore/env/dist/data"
-      DOCKER_ETC_FOLDER: "env/docker/etc"
+      DOCKER_ETC_FOLDER: "env/dist/etc"
+      AC_LOGIN_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_auth"
+      AC_WORLD_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_world"
+      AC_CHARACTER_DATABASE_INFO: "ac-database;3306;root;${DOCKER_DB_ROOT_PASSWORD:-password};acore_characters"
+      AC_DATA_DIR: "/azerothcore/env/dist/data"
+      AC_LOGS_DIR: "/azerothcore/env/dist/logs"
     profiles: [dev]
     volumes:
       - ac-dev-server:/azerothcore
