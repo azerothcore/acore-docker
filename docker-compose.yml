@@ -51,6 +51,7 @@ services:
       - ${DOCKER_SOAP_EXTERNAL_PORT:-7878}:7878
     expose:
       - 8085
+    volumes:
       - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
       - ${DOCKER_VOL_TOOLS_DBC:-ac-client-data-dbc}:/azerothcore/env/dist/data/dbc:ro
       - ${DOCKER_VOL_TOOLS_MAPS:-ac-client-data-maps}:/azerothcore/env/dist/data/maps:ro
