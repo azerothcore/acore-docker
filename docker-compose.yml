@@ -53,7 +53,7 @@ services:
       - 8085
     volumes:
       - ./scripts/lua:/azerothcore/env/dist/bin/lua_scripts/scripts
-      - ${DOCKER_VOL_CLIENT_DATA:-ac-client-data]:/azerothcore/env/dist/data:ro
+      - "${DOCKER_VOL_CLIENT_DATA:-ac-client-data}:/azerothcore/env/dist/data:ro"
 
     environment:
       AC_DATA_DIR: "/azerothcore/env/dist/data"
@@ -113,7 +113,7 @@ services:
     <<: *networks
     image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-7.0.0-dev.1}
     volumes:
-      - ${DOCKER_VOL_CLIENT_DATA:-ac-client-data]:/azerothcore/env/dist/data
+      - "${DOCKER_VOL_CLIENT_DATA:-ac-client-data}:/azerothcore/env/dist/data"
 
   ac-db-import:
     <<: *ac-shared-conf
