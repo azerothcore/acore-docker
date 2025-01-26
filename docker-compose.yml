@@ -42,7 +42,7 @@ services:
     tty: true
     cap_add:
       - SYS_NICE # CAP_SYS_NICE
-    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-12.0.0-dev.1}
+    image: acore/ac-wotlk-worldserver:${DOCKER_IMAGE_TAG:-master}
     restart: unless-stopped
     privileged: true
     user: ${DOCKER_USER:-acore}
