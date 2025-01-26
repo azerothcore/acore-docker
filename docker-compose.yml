@@ -73,7 +73,7 @@ services:
   ac-authserver:
     <<: *ac-shared-conf
     tty: true
-    image: acore/ac-wotlk-authserver:${DOCKER_IMAGE_TAG:-12.0.0-dev.1}
+    image: acore/ac-wotlk-authserver:${DOCKER_IMAGE_TAG:-master}
     restart: unless-stopped
     ports:
       - ${DOCKER_AUTH_EXTERNAL_PORT:-3724}:3724
@@ -111,13 +111,13 @@ services:
 
   ac-client-data:
     <<: *networks
-    image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-12.0.0-dev.1}
+    image: acore/ac-wotlk-client-data:${DOCKER_IMAGE_TAG:-master}
     volumes:
       - "${DOCKER_VOL_CLIENT_DATA:-ac-client-data}:/azerothcore/env/dist/data"
 
   ac-db-import:
     <<: *ac-shared-conf
-    image: acore/ac-wotlk-db-import:${DOCKER_IMAGE_TAG:-12.0.0-dev.1}
+    image: acore/ac-wotlk-db-import:${DOCKER_IMAGE_TAG:-master}
     environment:
       AC_DISABLE_INTERACTIVE: "1"
       AC_DATA_DIR: "/azerothcore/env/dist/data"
