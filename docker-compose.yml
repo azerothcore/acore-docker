@@ -1,5 +1,3 @@
-version: "3.9"
-
 # extension field: https://docs.docker.com/compose/compose-file/compose-file-v3/#extension-fields
 x-networks: &networks
   networks:
@@ -129,7 +127,6 @@ services:
     depends_on:
       ac-database:
         condition: service_healthy
-
 
   phpmyadmin:
     <<: *networks
