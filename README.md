@@ -55,7 +55,7 @@ docker compose up -d
 
 * If the application crashes, docker will automatically restart the container for you
 
-## Access the worlserver console and create an account
+## Access the worldserver console and create an account
 
 With **docker compose up** we have an up and running worldserver as well, but you need to access its interactive shell to
 run commands on the worldserver.
@@ -246,7 +246,7 @@ However, our docker compose also provides a pre-configured phpmyadmin container 
 What you need to do is the following:
 
 1. **docker compose up phpmyadmin** to startup the phpmyadmin container
-2. connect to **https://127.0.0.1:8080** (unless you changed the port)
+2. connect to **http://127.0.0.1:8080** (unless you changed the port)
 3. insert the db credentials. By default:  ac-database (host), root (user), password (password)
 
 You are ready to go! 
@@ -282,4 +282,5 @@ Now run this command: **docker compose run --rm --no-deps ac-dev-tools bash** to
 
 After the extraction (it can take hours) the file will be available inside the `ac-client-data-*` volumes.
 
-
+## Contributing
+[See the relevant section of the main project](https://github.com/azerothcore/azerothcore-wotlk#contributing)

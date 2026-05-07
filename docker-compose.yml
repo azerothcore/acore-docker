@@ -1,4 +1,4 @@
-# extension field: https://docs.docker.com/compose/compose-file/compose-file-v3/#extension-fields
+# See https://docs.docker.com/reference/compose-file/extension
 x-networks: &networks
   networks:
     - ac-network
