@@ -132,7 +132,7 @@ services:
     <<: *networks
     image: phpmyadmin
     ports:
-      - 8080:80
+      - ${DOCKER_PHPMYADMIN_PORT:-8080}:80
     environment:
       - PMA_ARBITRARY=1
     profiles: []
